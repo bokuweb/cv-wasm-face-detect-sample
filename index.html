@@ -1,12 +1,35 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="en">
 
 <head>
-  <meta charset="utf-8" />
-  <title>Opencv to WebAssembly example</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>OpenCV JS wasm version detectFace example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <style>
+    .main {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .main.show {
+      display: flex;
+    }
+
+    canvas {
+      margin: 0 20px;
+    }
+  </style>
 </head>
 
 <body>
+  <div class="main">
+    <canvas id="input"></canvas>
+    <canvas id="output"></canvas>
+    <input type="file" name="file" />
+  </div>
   <script type="text/javascript">
     "use strict"
     const name = "wasm/cv-wasm";
@@ -14,15 +37,11 @@
       preRun: [],
       postRun: [],
       wasmBinaryFile: `${name}.wasm`,
-      print: text => {
-        console.log(text);
-      },
-      printErr: text => {
-        console.error(text);
-      },
+      print: text => console.log(text),
+      printErr: text => console.error(text),
     };
     fetch(`${name}.wasm`)
-      .then(resp => resp.arrayBuffer())
+      .then(res => res.arrayBuffer())
       .then(buffer => {
         Module.wasmBinary = buffer;
         const script = document.createElement("script");
@@ -36,4 +55,5 @@
       })
   </script>
 </body>
+
 </html>
